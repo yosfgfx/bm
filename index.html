@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html dir="rtl">
+  <head>
+    <base target="_top">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;700&display=swap');
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Alexandria', sans-serif;
+        font-weight: 500;
+        background: linear-gradient(-45deg, #0a7951, #2b435a, #0a7951, #2b435a);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        position: relative;
+      }
+
+      @keyframes gradientBG {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        height: 100px;
+        background: url('https://weqaa.gov.sa/Style%20Library/assets/images/footer-top.svg') repeat-x bottom;
+        background-size: contain;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .container {
+        max-width: 650px;
+        margin: 50px auto;
+        background: #ffffffcc;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        position: relative;
+        z-index: 1;
+      }
+
+      .header {
+        width: 100%;
+        height: 240px;
+        position: relative;
+        background: linear-gradient(45deg, #0a7951, #2b435a);
+        background-size: 400% 400%;
+        animation: gradientHeader 15s ease infinite;
+        border-radius: 15px;
+        margin-bottom: 20px;
+      }
+
+      @keyframes gradientHeader {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+      }
+
+      .logo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 260px;
+        height: auto;
+      }
+
+      .header h1 {
+        color: #fff;
+        text-align: center;
+        font-size: 26px;
+        font-weight: 800;
+        margin: 0;
+        position: absolute;
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 1.6;
+      }
+
+      label {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 5px;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="number"],
+      input[type="tel"],
+      input[type="email"],
+      select {
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-sizing: border-box;
+        font-family: 'Alexandria', sans-serif;
+        font-weight: 500;
+      }
+
+      input[readonly],
+      input[disabled],
+      select[disabled] {
+        background-color: #e9ecef;
+        color: #6c757d;
+      }
+
+      input[type="submit"],
+      #newBookingButton {
+        width: 100%;
+        padding: 15px;
+        font-size: 20px;
+        background-color: #0a7951;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      input[type="submit"]:hover,
+      #newBookingButton:hover {
+        background-color: #086a46;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        backdrop-filter: blur(10px);
+        background-color: rgba(43, 67, 90, 0.8);
+      }
+
+      .modal-content {
+        background: #fff;
+        border-radius: 15px;
+        padding: 40px;
+        width: 80%;
+        max-width: 600px;
+        margin: 50px auto;
+        text-align: center;
+        position: relative;
+      }
+
+      .modal-content h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-weight: 700;
+        color: #2B435A;
+      }
+
+      .modal-content .done-icon {
+        width: 280px;
+        height: 280px;
+        margin: 0 auto 20px auto;
+      }
+
+      .booking-details-container {
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 20px;
+        color: #2B435A;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        text-align: right;
+      }
+
+      .booking-details-container img {
+        width: 150px;
+        margin-bottom: 15px;
+        margin-right: 20px;
+      }
+
+      .booking-details-container p {
+        font-size: 18px;
+        margin: 10px 0;
+        line-height: 1.5;
+      }
+
+      .booking-details-container .label {
+        color: #2B435A;
+        font-weight: bold;
+      }
+
+      .booking-details-container .value {
+        color: #000;
+      }
+
+      .close-button {
+        background-color: #0a7951;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      .close-button:hover {
+        background-color: #086a46;
+      }
+
+      .group {
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #fff;
+      }
+
+      .duration-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .duration-button {
+        flex: 1;
+        padding: 15px;
+        font-size: 16px;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #f8f9fa;
+        cursor: pointer;
+      }
+
+      .duration-button.selected {
+        background-color: #0a7951;
+        color: #fff;
+      }
+
+      .appointment-details {
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        color: #2B435A;
+      }
+
+      .appointment-details h3 {
+        color: #2B435A;
+      }
+
+      .booking-details {
+        margin-top: 20px;
+      }
+
+      .booking-details img {
+        width: 360px;
+        margin-bottom: 20px;
+        filter: invert(27%) sepia(79%) saturate(451%) hue-rotate(111deg) brightness(96%) contrast(90%);
+      }
+
+      .error-message {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: -15px;
+        margin-bottom: 15px;
+      }
+
+      .loading-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .loading-spinner {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #0a7951;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      @media (max-width: 650px) {
+        .container {
+          margin: 20px;
+          padding: 20px;
+        }
+
+        .modal-content {
+          margin: 50px 20px;
+        }
+
+        .header h1 {
+          font-size: 22px;
+        }
+      }
+    </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment-hijri@2.1.3/build/moment-hijri.min.js"></script>    
+    <script>
+      let bookingData = {};
+
+        document.addEventListener('DOMContentLoaded', function() {
+        var durationButtons = document.querySelectorAll('.duration-button');
+        durationButtons.forEach(function(button) {
+          button.addEventListener('click', function() {
+            durationButtons.forEach(function(btn) {
+              btn.classList.remove('selected');
+            });
+            button.classList.add('selected');
+            document.getElementById('duration').value = button.getAttribute('data-duration');
+            onDateOrDurationChange();
+          });
+        });
+
+        document.getElementById('meetingTime').addEventListener('change', updateAppointmentDetails);
+
+        // Set minimum date for date picker
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById('meetingDate').setAttribute('min', today);
+
+        // Client-side validation
+        var form = document.getElementById('form');
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          if (validateForm()) {
+            showLoadingOverlay();
+            submitForm();
+          }
+        });
+      });
+
+      function onDateOrDurationChange() {
+        var selectedDate = document.getElementById('meetingDate').value;
+        var selectedDuration = document.getElementById('duration').value;
+        if (selectedDate && selectedDuration) {
+          google.script.run.withSuccessHandler(populateTimes).getAvailableTimes(selectedDate, selectedDuration);
+        }
+      }
+
+      function populateTimes(times) {
+        var timeSelect = document.getElementById('meetingTime');
+        timeSelect.innerHTML = '<option value="">الأوقات المتاحة</option>';
+        times.forEach(function(time) {
+          var option = document.createElement('option');
+          option.value = time;
+          option.text = formatTime(time);
+          timeSelect.add(option);
+        });
+      }
+
+      function formatTime(time) {
+        var [hours, minutes] = time.split(':');
+        var ampm = hours >= 12 ? 'مساءً' : 'صباحاً';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        return hours + ':' + minutes + ' ' + ampm;
+      }
+
+      function updateAppointmentDetails() {
+        var selectedDate = document.getElementById('meetingDate').value;
+        var selectedTime = document.getElementById('meetingTime').value;
+        var selectedDuration = document.getElementById('duration').value;
+
+        if (selectedDate && selectedTime && selectedDuration) {
+          var startTime = selectedTime;
+          var endTime = calculateEndTime(startTime, selectedDuration);
+          var appointmentDetails = formatAppointmentDetails(selectedDate, startTime, endTime);
+          document.getElementById('appointmentDetails').innerHTML = appointmentDetails;
+        } else {
+          document.getElementById('appointmentDetails').innerHTML = '';
+        }
+      }
+
+      function calculateEndTime(startTime, duration) {
+        var [hours, minutes] = startTime.split(':').map(Number);
+        var endHours = hours + parseInt(duration);
+        if (endHours >= 24) endHours -= 24;
+        var endTime = (endHours < 10 ? '0' : '') + endHours + ':' + (minutes < 10 ? '0' : '') + minutes;
+        return endTime;
+      }
+
+      function formatAppointmentDetails(dateStr, startTime, endTime) {
+        var date = new Date(dateStr);
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var gregorianDate = date.toLocaleDateString('ar-SA', options);
+        var hijriDate = convertToHijri(date);
+        var formattedStartTime = formatTime(startTime);
+        var formattedEndTime = formatTime(endTime);
+
+        return `
+          <h3>تفاصيل الموعد:</h3>
+          <p>سيكون اجتماعك يوم ${gregorianDate} الموافق ${hijriDate}</p>
+          <p>يبدأ الاجتماع عند الساعة: ${formattedStartTime}</p>
+          <p>وينتهي عند الساعة: ${formattedEndTime}</p>
+        `;
+      }
+
+      function convertToHijri(date) {
+            // Convert to Hijri using moment-hijri
+            return moment(date).format('iD iMMMM iYYYY هـ');
+        }
+
+      function validateForm() {
+        var isValid = true;
+        var fields = ['coordinatorName', 'mobileNumber', 'email', 'departmentName', 'meetingDate', 'duration', 'meetingTime'];
+        
+        fields.forEach(function(field) {
+          var element = document.getElementById(field);
+          var errorElement = document.getElementById(field + 'Error');
+          if (!element.value) {
+            isValid = false;
+            if (!errorElement) {
+              errorElement = document.createElement('div');
+              errorElement.id = field + 'Error';
+              errorElement.className = 'error-message';
+              element.parentNode.insertBefore(errorElement, element.nextSibling);
+            }
+            errorElement.textContent = 'هذا الحقل مطلوب';
+          } else if (errorElement) {
+            errorElement.remove();
+          }
+        });
+
+        return isValid;
+      }
+
+      function showLoadingOverlay() {
+        var overlay = document.createElement('div');
+        overlay.className = 'loading-overlay';
+        overlay.innerHTML = '<div class="loading-spinner"></div>';
+        document.body.appendChild(overlay);
+        overlay.style.display = 'flex';
+      }
+
+      function hideLoadingOverlay() {
+        var overlay = document.querySelector('.loading-overlay');
+        if (overlay) {
+          overlay.remove();
+        }
+      }
+
+      function submitForm() {
+        bookingData = {
+          departmentName: document.getElementById('departmentName').value,
+          meetingDate: document.getElementById('meetingDate').value,
+          meetingTime: document.getElementById('meetingTime').value,
+          duration: document.getElementById('duration').value,
+          mobileNumber: document.getElementById('mobileNumber').value,
+          email: document.getElementById('email').value,
+          coordinatorName: document.getElementById('coordinatorName').value
+        };
+        google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).submitForm(bookingData);
+      }
+
+      function onSuccess(message) {
+        hideLoadingOverlay();
+        document.getElementById('modal').style.display = 'block';
+
+        var bookingDetailsHtml = `
+          <div class="booking-details-container">
+            <img src="https://weqaa.gov.sa/Style%20Library/assets/images/logo-new.png" alt="Logo">
+            <p><span class="label">اسم الإدارة:</span> <span class="value">${bookingData.departmentName}</span></p>
+            <p><span class="label">تاريخ الاجتماع:</span> <span class="value">${formatDate(bookingData.meetingDate)}</span></p>
+            <p><span class="label">وقت الاجتماع:</span> <span class="value">${formatTime(bookingData.meetingTime)} - ${formatTime(calculateEndTime(bookingData.meetingTime, bookingData.duration))}</span></p>
+            <p><span class="label">مدة الاجتماع:</span> <span class="value">${bookingData.duration} ساعة</span></p>
+            <p><span class="label">اسم المنسق:</span> <span class="value">${bookingData.coordinatorName}</span></p>
+            <p><span class="label">رقم الجوال:</span> <span class="value">${bookingData.mobileNumber}</span></p>
+            <p><span class="label">الإيميل:</span> <span class="value">${bookingData.email}</span></p>
+          </div>
+        `;
+        document.querySelector('.modal-content').insertAdjacentHTML('beforeend', bookingDetailsHtml);
+      }
+
+      function onFailure(error) {
+        hideLoadingOverlay();
+        alert('حدث خطأ أثناء إرسال النموذج. الرجاء المحاولة مرة أخرى.');
+      }
+
+      function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+        displayBookingDetails();
+      }
+
+      function displayBookingDetails() {
+        var inputs = document.querySelectorAll('input, select, button.duration-button');
+        inputs.forEach(function(input) {
+          input.disabled = true;
+          input.classList.add('disabled');
+        });
+
+        document.querySelector('input[type="submit"]').style.display = 'none';
+
+        var newBookingButton = document.createElement('button');
+        newBookingButton.id = 'newBookingButton';
+        newBookingButton.innerText = 'حجز موعد جديد';
+        newBookingButton.onclick = resetForm;
+        document.getElementById('form').appendChild(newBookingButton);
+      }
+
+      function resetForm() {
+        document.getElementById('form').reset();
+        var inputs = document.querySelectorAll('input, select, button.duration-button');
+        inputs.forEach(function(input) {
+          input.disabled = false;
+          input.classList.remove('disabled');
+          if (input.classList.contains('selected')) {
+            input.classList.remove('selected');
+          }
+        });
+        document.querySelector('input[type="submit"]').style.display = 'block';
+        document.getElementById('newBookingButton').remove();
+        document.getElementById('meetingTime').innerHTML = '<option value="">الأوقات المتاحة</option>';
+        document.getElementById('appointmentDetails').innerHTML = '';
+        document.querySelector('.modal-content').innerHTML = `
+          <div class="done-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99.51 99.5">
+              <defs>
+                <style>
+                  .cls-1 {
+                    fill: #0a7951;
+                  }
+                </style>
+              </defs>
+              <g id="Oy2kUp.tif">
+                <g>
+                  <path class="cls-1" d="M99.51,49.96c-.06,27.37-22.42,49.58-49.84,49.54C22.16,99.46-.06,77.11,0,49.54.06,22.07,22.46-.09,50.08,0c27.33.09,49.49,22.49,49.42,49.96ZM49.79,91.05c22.79-.01,41.26-18.49,41.26-41.27,0-22.91-18.49-41.35-41.45-41.32-22.74.02-41.17,18.57-41.14,41.39.03,22.78,18.53,41.22,41.33,41.21Z"/>
+                  <path class="cls-1" d="M74.84,41.22c-.04,2.06-.71,3.32-1.82,4.43-8.34,8.3-16.64,16.63-24.99,24.9-2.58,2.55-5.23,2.57-7.86.02-4.63-4.51-9.2-9.08-13.72-13.69-2.34-2.39-2.37-5.42-.25-7.51,2.17-2.15,5-2.06,7.49.35,2.91,2.82,5.82,5.66,8.59,8.62,1.32,1.41,2.18,1.46,3.57.04,6.49-6.63,13.07-13.16,19.66-19.7,2.69-2.67,5.59-2.82,7.87-.56,1,.99,1.45,2.19,1.45,3.09Z"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <h2>شكراً،،<br>تم إرسال طلب حجز قاعة الاجتماعات بنجاح</h2>
+          <button class="close-button" onclick="closeModal()">إغلاق</button>
+        `;
+      }
+
+      function formatDate(dateStr) {
+        var date = new Date(dateStr);
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('ar-SA', options);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="https://weqaa.gov.sa/Style%20Library/assets/images/logo-new.png" alt="Logo" class="logo">
+        <h1>طلب حجز قاعة اجتماعات قطاع الصحة الحيوانية</h1>
+      </div>
+
+      <form id="form" onsubmit="event.preventDefault(); submitForm();">
+        <!-- بيانات المنسق -->
+        <div class="group">
+          <label for="coordinatorName">اسم المنسق:</label>
+          <input type="text" id="coordinatorName" required>
+
+          <label for="mobileNumber">رقم الجوال:</label>
+          <input type="tel" id="mobileNumber" required>
+
+          <label for="email">الإيميل:</label>
+          <input type="email" id="email" required>
+        </div>
+
+        <!-- تفاصيل الاجتماع -->
+        <div class="group">
+          <label for="departmentName">اسم الإدارة الراغبة في حجز الموعد:</label>
+          <input type="text" id="departmentName" required>
+
+          <label for="meetingDate">تاريخ الاجتماع:</label>
+          <input type="date" id="meetingDate" onchange="onDateOrDurationChange();" required>
+
+          <label>مدة الاجتماع بالساعات:</label>
+          <div class="duration-buttons">
+            <button type="button" class="duration-button" data-duration="1">1 ساعة</button>
+            <button type="button" class="duration-button" data-duration="2">2 ساعات</button>
+            <button type="button" class="duration-button" data-duration="3">3 ساعات</button>
+            <button type="button" class="duration-button" data-duration="4">4 ساعات</button>
+          </div>
+          <input type="hidden" id="duration" required>
+
+          <label for="meetingTime">وقت الاجتماع:</label>
+          <select id="meetingTime" required>
+            <option value="">الأوقات المتاحة</option>
+          </select>
+        </div>
+
+        <!-- تفاصيل الموعد -->
+        <div id="appointmentDetails" class="appointment-details"></div>
+
+        <input type="submit" value="إرسال">
+      </form>
+    </div>
+
+    <!-- النافذة المنبثقة -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <!-- أيقونة SVG -->
+        <div class="done-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99.51 99.5">
+            <defs>
+              <style>
+                .cls-1 {
+                  fill: #0a7951;
+                }
+              </style>
+            </defs>
+            <g id="Oy2kUp.tif">
+              <g>
+                <path class="cls-1" d="M99.51,49.96c-.06,27.37-22.42,49.58-49.84,49.54C22.16,99.46-.06,77.11,0,49.54.06,22.07,22.46-.09,50.08,0c27.33.09,49.49,22.49,49.42,49.96ZM49.79,91.05c22.79-.01,41.26-18.49,41.26-41.27,0-22.91-18.49-41.35-41.45-41.32-22.74.02-41.17,18.57-41.14,41.39.03,22.78,18.53,41.22,41.33,41.21Z"/>
+                <path class="cls-1" d="M74.84,41.22c-.04,2.06-.71,3.32-1.82,4.43-8.34,8.3-16.64,16.63-24.99,24.9-2.58,2.55-5.23,2.57-7.86.02-4.63-4.51-9.2-9.08-13.72-13.69-2.34-2.39-2.37-5.42-.25-7.51,2.17-2.15,5-2.06,7.49.35,2.91,2.82,5.82,5.66,8.59,8.62,1.32,1.41,2.18,1.46,3.57.04,6.49-6.63,13.07-13.16,19.66-19.7,2.69-2.67,5.59-2.82,7.87-.56,1,.99,1.45,2.19,1.45,3.09Z"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <h2>شكراً،،<br>تم إرسال طلب حجز قاعة الاجتماعات بنجاح</h2>
+        <button class="close-button" onclick="closeModal()">إغلاق</button>
+      </div>
+    </div>
+  </body>
+</html>
