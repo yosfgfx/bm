@@ -1,301 +1,114 @@
 <!DOCTYPE html>
-<html dir="rtl">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>حجز غرفة الاجتماعات</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;700&display=swap');
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Alexandria', sans-serif;
-      font-weight: 500;
-      background: linear-gradient(-45deg, #0a7951, #2b435a, #0a7951, #2b435a);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      position: relative;
-    }
-
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    .container {
-      max-width: 650px;
-      margin: 50px auto;
-      background: #ffffffcc;
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      position: relative;
-      z-index: 1;
-    }
-
-    .header {
-      width: 100%;
-      height: 240px;
-      position: relative;
-      background: linear-gradient(45deg, #0a7951, #2b435a);
-      background-size: 400% 400%;
-      animation: gradientHeader 15s ease infinite;
-      border-radius: 15px;
-      margin-bottom: 20px;
-    }
-
-    .header h1 {
-      color: #fff;
-      text-align: center;
-      font-size: 26px;
-      font-weight: 800;
-      margin: 0;
-      position: absolute;
-      top: 65%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      line-height: 1.6;
-    }
-
-    label {
-      display: block;
-      font-size: 18px;
-      margin-bottom: 5px;
-      color: #555;
-    }
-
-    input[type="text"],
-    input[type="date"],
-    input[type="time"],
-    select,
-    input[type="number"],
-    input[type="password"] {
-      width: 100%;
-      padding: 15px;
-      font-size: 16px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-sizing: border-box;
-    }
-
-    input[type="submit"], button {
-      width: 100%;
-      padding: 15px;
-      font-size: 20px;
-      background-color: #0a7951;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    input[type="submit"]:hover, button:hover {
-      background-color: #086a46;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(43, 67, 90, 0.8);
-    }
-
-    .modal-content {
-      background: #fff;
-      border-radius: 15px;
-      padding: 40px;
-      width: 80%;
-      max-width: 600px;
-      margin: 50px auto;
-      text-align: center;
-    }
-
-    .close-button {
-      background-color: #0a7951;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 20px;
-      font-size: 18px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .close-button:hover {
-      background-color: #086a46;
-    }
-  </style>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-
-  <script>
-    // تهيئة Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyDleVfi3Z9BO5Apxe8_TOzG4FkiQ2giBn8",
-      authDomain: "yosfgfx-meetroom.firebaseapp.com",
-      projectId: "yosfgfx-meetroom",
-      storageBucket: "yosfgfx-meetroom.appspot.com",
-      messagingSenderId: "605591505888",
-      appId: "1:605591505888:web:74a259ca22cd2ce3aeb985",
-      measurementId: "G-ZK83SMYP9M"
-    };
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const bookingForm = document.getElementById('form');
-      bookingForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const coordinatorName = document.getElementById('coordinatorName').value;
-        const departmentName = document.getElementById('departmentName').value;
-        const meetingDate = document.getElementById('meetingDate').value;
-        const meetingTime = document.getElementById('meetingTime').value;
-        const duration = document.getElementById('duration').value;
-
-        const isOverlap = await checkOverlap(meetingDate, meetingTime, duration);
-        if (isOverlap) {
-          alert('هذا الموعد محجوز بالفعل. الرجاء اختيار وقت آخر.');
-          return;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب حجز قاعة اجتماعات قطاع الصحة الحيوانية</title>
+    <link rel="icon" type="image/png" href="https://weqaa.gov.sa/Style%20Library/assets/images/favicon-32x32.png" sizes="32x32">
+    <style>
+        @font-face {
+            font-family: 'SSTArabic-Bold';
+            src: url('https://weqaa.gov.sa/Style%20Library/assets/fonts/SSTArabic-Bold.woff2') format('woff2');
         }
-
-        db.collection('bookings').add({
-          coordinatorName,
-          departmentName,
-          meetingDate,
-          meetingTime,
-          duration
-        })
-        .then(() => {
-          alert('تم الحجز بنجاح!');
-          bookingForm.reset();
-          document.getElementById('modal').style.display = 'block';
-          showBookingDetails({ coordinatorName, departmentName, meetingDate, meetingTime, duration });
-        })
-        .catch((error) => {
-          console.error('خطأ أثناء إضافة الحجز: ', error);
-        });
-      });
-
-      async function checkOverlap(date, startTime, duration) {
-        const bookingsSnapshot = await db.collection('bookings')
-          .where('meetingDate', '==', date)
-          .get();
-
-        let isOverlap = false;
-        const newStart = convertTimeToMinutes(startTime);
-        const newEnd = newStart + (duration * 60);
-
-        bookingsSnapshot.forEach((doc) => {
-          const booking = doc.data();
-          const existingStart = convertTimeToMinutes(booking.meetingTime);
-          const existingEnd = existingStart + (booking.duration * 60);
-
-          if (newStart < existingEnd && newEnd > existingStart) {
-            isOverlap = true;
-          }
-        });
-
-        return isOverlap;
-      }
-
-      function convertTimeToMinutes(time) {
-        const [hours, minutes] = time.split(':').map(Number);
-        return hours * 60 + minutes;
-      }
-
-      db.collection('bookings').orderBy('meetingDate').orderBy('meetingTime').onSnapshot((snapshot) => {
-        const bookingsList = document.getElementById('bookingsList');
-        bookingsList.innerHTML = '';
-        snapshot.forEach((doc) => {
-          const booking = doc.data();
-          const bookingItem = document.createElement('div');
-          bookingItem.textContent = `${booking.meetingDate} - ${booking.meetingTime} - ${booking.coordinatorName}`;
-          bookingsList.appendChild(bookingItem);
-        });
-      });
-    });
-
-    function showBookingDetails(booking) {
-      const modalContent = document.querySelector('.modal-content');
-      modalContent.innerHTML = `
-        <div>
-          <p>المنسق: ${booking.coordinatorName}</p>
-          <p>الإدارة: ${booking.departmentName}</p>
-          <p>تاريخ الاجتماع: ${booking.meetingDate}</p>
-          <p>وقت الاجتماع: ${booking.meetingTime}</p>
-          <p>مدة الاجتماع: ${booking.duration} ساعة</p>
-          <button class="close-button" onclick="closeModal()">إغلاق</button>
-        </div>
-      `;
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-
-    function viewPrivateBookings() {
-      const accessCode = document.getElementById('accessCode').value;
-      if (accessCode === '1234') {  // استبدل هذا الرقم برقم سري مناسب
-        db.collection('bookings').get().then((snapshot) => {
-          const bookingsList = document.getElementById('bookingsList');
-          bookingsList.innerHTML = '';
-          snapshot.forEach((doc) => {
-            const booking = doc.data();
-            const bookingItem = document.createElement('div');
-            bookingItem.textContent = `${booking.meetingDate} - ${booking.meetingTime} - ${booking.coordinatorName}`;
-            bookingsList.appendChild(bookingItem);
-          });
-        });
-      } else {
-        alert('الرقم السري غير صحيح');
-      }
-    }
-  </script>
+        @font-face {
+            font-family: 'SSTArabic-Roman';
+            src: url('https://weqaa.gov.sa/Style%20Library/assets/fonts/SSTArabic-Roman.woff2') format('woff2');
+        }
+        body {
+            margin: 0;
+            font-family: 'SSTArabic-Roman', sans-serif;
+            background: linear-gradient(135deg, #0a7951, #2b435a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+        }
+        .page-container {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+        }
+        .logo {
+            width: 300px;
+            margin-left: 20px;
+        }
+        .title {
+            font-family: 'SSTArabic-Bold', sans-serif;
+            font-size: 24px;
+            color: white;
+        }
+        .form-header-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 15px;
+        }
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .footer-container {
+            margin-top: 20px;
+            width: 100%;
+            background: linear-gradient(135deg, #0a7951, #2b435a);
+            border-radius: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .footer {
+            font-family: 'SSTArabic-Bold', sans-serif;
+            text-align: center;
+            color: white;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .designer-credit {
+            font-family: 'SSTArabic-Roman', sans-serif;
+            font-size: 12px; 
+            text-align: center;
+            margin-top: 10px;
+            color: white;
+        }
+        iframe {
+            width: 100%;
+            height: 1639px;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>طلب حجز قاعة اجتماعات قطاع الصحة الحيوانية</h1>
+    <div class="page-container">
+        <div class="header">
+            <img src="https://weqaa.gov.sa/Style%20Library/assets/images/logo-new.png" alt="Logo" class="logo">
+            <div class="title"> </div>
+        </div>
+        <img src="https://raw.githubusercontent.com/yosfgfx/MeetRoomBooking/main/header-request.jpg" alt="Header Image" class="form-header-image">
+        <div class="form-container">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGKel-DeHPX5rz6FAEUxwC94oXCThCKC4OoSmX9YzrDtVbfQ/viewform?embedded=true">Loading…</iframe>
+        </div>
+        <div class="footer-container">
+            <div class="footer">
+                <p>إدارة دعم ومتابعة الأعمال لقطاع الصحة الحيوانية</p>
+                <p>يمكنك التواصل عبر: 0537557446</p>
+            </div>
+        </div>
+        <div class="designer-credit">
+            <a href="https://behance.net/yosfgfx" target="_blank">Designed by: Yousef Humaid</a>
+        </div>
     </div>
-    <form id="form">
-      <label for="coordinatorName">اسم المنسق:</label>
-      <input type="text" id="coordinatorName" required>
-
-      <label for="departmentName">اسم الإدارة:</label>
-      <input type="text" id="departmentName" required>
-
-      <label for="meetingDate">تاريخ الاجتماع:</label>
-      <input type="date" id="meetingDate" required>
-
-      <label for="meetingTime">وقت الاجتماع:</label>
-      <input type="time" id="meetingTime" required>
-
-      <label for="duration">مدة الاجتماع بالساعات:</label>
-      <input type="number" id="duration" min="1" max="4" required>
-
-      <input type="submit" value="إرسال">
-    </form>
-
-    <!-- حقل إدخال الرقم السري لعرض الحجوزات -->
-    <div>
-      <input type="password" id="accessCode" placeholder="أدخل الرقم السري لاستعراض الحجوزات">
-      <button onclick="viewPrivateBookings()">عرض الحجوزات</button>
-    </div>
-
-    <div id="bookingsList"></div>
-
-    <div id="modal" class="modal">
-      <div class="modal-content"></div>
-    </div>
-  </div>
 </body>
 </html>
