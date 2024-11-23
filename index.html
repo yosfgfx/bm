@@ -43,24 +43,24 @@
         .page-container {
             max-width: 800px;
             width: 100%;
-            position: relative;
             margin-top: 20px;
             margin-bottom: 20px;
         }
         .header {
             display: flex;
-            align-items: center;
-            justify-content: flex-start;
+            flex-direction: column;
+            align-items: flex-start; /* محاذاة المحتوى إلى اليمين */
             margin-bottom: 20px;
         }
         .logo {
             width: 300px;
-            margin-left: 20px;
         }
         .title {
-            font-family: 'SSTArabic-Bold', sans-serif;
-            font-size: 24px;
+            font-family: 'SSTArabic-Roman', sans-serif;
+            font-size: 12px;
             color: white;
+            margin-right: 83px; /* المسافة البادئة إلى اليمين */
+            margin-top: -11px; /* مسافة صغيرة بين الشعار والعنوان */
         }
         .form-header-image {
             width: 100%;
@@ -82,7 +82,6 @@
             background: rgba(10, 121, 81, 0.9);
             border-radius: 12px;
             padding: 20px;
-            box-sizing: border-box;
             text-align: center;
             line-height: 1.8;
         }
@@ -126,6 +125,7 @@
             .title {
                 text-align: center;
                 font-size: 18px;
+                margin-right: 0; /* إزالة المسافة البادئة على الهواتف */
             }
             .form-header-image {
                 width: 100%;
@@ -144,7 +144,7 @@
     <div class="page-container">
         <div class="header">
             <img src="https://weqaa.gov.sa/Style%20Library/assets/images/logo-new.png" alt="Logo" class="logo">
-            <div class="title">طلب حجز قاعة اجتماعات</div>
+            <div class="title">قطاع الصحة الحيوانية</div>
         </div>
         <img src="https://raw.githubusercontent.com/yosfgfx/MeetRoomBooking/main/header-request.jpg" alt="Header Image" class="form-header-image">
         <div class="form-container">
@@ -156,7 +156,7 @@
             <p>يمكنك التواصل عبر: 0537557446</p>
         </div>
         <div class="designer-credit">
-            <a href="https://behance.net/yosfgfx" target="_blank"> </a>
+            <a href="https://behance.net/yosfgfx" target="_blank">تصميم بواسطة يوسف</a>
         </div>
     </div>
 
