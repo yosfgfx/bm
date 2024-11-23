@@ -43,6 +43,8 @@
             max-width: 800px;
             width: 100%;
             position: relative;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
         .header {
             display: flex;
@@ -80,6 +82,10 @@
             border-radius: 12px;
             padding: 20px;
             box-sizing: border-box;
+            text-align: center;
+            padding: 30px;
+            line-height: 1.8;
+
         }
         .footer {
             font-family: 'SSTArabic-Bold', sans-serif;
@@ -107,8 +113,38 @@
             width: 100%;
             height: 1639px;
             border: none;
-        }
+            font-family: 'SSTArabic-Roman', sans-serif !important;
+    }
+    iframe .freebirdFormviewerViewTitleCardTitle {
+        font-family: 'SSTArabic-Bold', sans-serif !important;
+    }
+    iframe .quantumWizTextinputPaperinputInput {
+        font-family: 'SSTArabic-Roman', sans-serif !important;
+    }
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+    .logo {
+        margin-bottom: 10px;
+        width: 200px;
+    }
+    .form-header-image {
+        height: auto;
+    }
+    .footer-container {
+        padding: 15px;
+    }
+}
     </style>
+<script>
+    const iframe = document.querySelector('iframe');
+    iframe.onload = () => {
+        document.getElementById('loading').style.display = 'none';
+    };
+</script>
+<div id="loading" style="text-align:center; color:white; font-family:'SSTArabic-Roman';">جاري التحميل...</div>
 </head>
 <body>
     <div class="page-container">
@@ -122,12 +158,12 @@
         </div>
         <div class="footer-container">
             <div class="footer">
-                <p>إدارة دعم ومتابعة الأعمال لقطاع الصحة الحيوانية</p>
+                <p>إدارة دعم ومتابعة الأعمال للصحة الحيوانية</p>
                 <p>يمكنك التواصل عبر: 0537557446</p>
             </div>
         </div>
         <div class="designer-credit">
-            <a href="https://behance.net/yosfgfx" target="_blank">Designed by: Yousef Humaid</a>
+            <a href="https://behance.net/yosfgfx" target="_blank"> </a>
         </div>
     </div>
 </body>
