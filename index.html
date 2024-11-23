@@ -18,7 +18,8 @@
     <meta name="twitter:description" content="قم بحجز قاعة الاجتماعات الخاصة بقطاع الصحة الحيوانية بسهولة ويسر.">
     <meta name="twitter:image" content="https://raw.githubusercontent.com/yosfgfx/MeetRoomBooking/main/Header.jpg">
     <meta name="twitter:card" content="summary_large_image">
-        <style>
+
+    <style>
         @font-face {
             font-family: 'SSTArabic-Bold';
             src: url('https://weqaa.gov.sa/Style%20Library/assets/fonts/SSTArabic-Bold.woff2') format('woff2');
@@ -78,32 +79,26 @@
         .footer-container {
             margin-top: 20px;
             width: 100%;
-            background: linear-gradient(135deg, #0a7951, #2b435a);
+            background: rgba(10, 121, 81, 0.9);
             border-radius: 12px;
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
-            padding: 30px;
             line-height: 1.8;
-
-        }
-        .footer {
-            font-family: 'SSTArabic-Bold', sans-serif;
-            text-align: center;
-            color: white;
         }
         .footer p {
-            margin: 5px 0;
+            margin: 0;
+            font-size: 14px;
         }
-                .designer-credit {
+        .designer-credit {
             font-family: 'SSTArabic-Roman', sans-serif;
-            font-size: 12px; /* Small text size */
+            font-size: 12px;
             text-align: center;
             margin-top: 10px;
-            color: #10C583; /* Updated color */
+            color: #10C583;
         }
         .designer-credit a {
-            color: #10C583; /* Updated color */
+            color: #10C583;
             text-decoration: none;
         }
         .designer-credit a:hover {
@@ -111,60 +106,72 @@
         }
         iframe {
             width: 100%;
-            height: 1639px;
+            height: 100vh;
+            min-height: 600px;
             border: none;
             font-family: 'SSTArabic-Roman', sans-serif !important;
-    }
-    iframe .freebirdFormviewerViewTitleCardTitle {
-        font-family: 'SSTArabic-Bold', sans-serif !important;
-    }
-    iframe .quantumWizTextinputPaperinputInput {
-        font-family: 'SSTArabic-Roman', sans-serif !important;
-    }
-@media (max-width: 600px) {
-    .header {
-        flex-direction: column;
-        align-items: center;
-    }
-    .logo {
-        margin-bottom: 10px;
-        width: 200px;
-    }
-    .form-header-image {
-        height: auto;
-    }
-    .footer-container {
-        padding: 15px;
-    }
-}
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: center;
+            }
+            .logo {
+                width: 150px;
+                margin: 0 auto 10px auto;
+            }
+            .title {
+                text-align: center;
+                font-size: 18px;
+            }
+            .form-header-image {
+                width: 100%;
+                height: auto;
+            }
+            .form-container {
+                padding: 10px;
+            }
+            .footer-container {
+                padding: 10px;
+            }
+        }
     </style>
-<script>
-    const iframe = document.querySelector('iframe');
-    iframe.onload = () => {
-        document.getElementById('loading').style.display = 'none';
-    };
-</script>
-<div id="loading" style="text-align:center; color:white; font-family:'SSTArabic-Roman';">جاري التحميل...</div>
 </head>
 <body>
     <div class="page-container">
         <div class="header">
             <img src="https://weqaa.gov.sa/Style%20Library/assets/images/logo-new.png" alt="Logo" class="logo">
-            <div class="title"> </div>
+            <div class="title">طلب حجز قاعة اجتماعات</div>
         </div>
         <img src="https://raw.githubusercontent.com/yosfgfx/MeetRoomBooking/main/header-request.jpg" alt="Header Image" class="form-header-image">
         <div class="form-container">
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGKel-DeHPX5rz6FAEUxwC94oXCThCKC4OoSmX9YzrDtVbfQ/viewform?embedded=true">Loading…</iframe>
+            <div id="loading" style="text-align:center; color:white; font-family:'SSTArabic-Roman';">جاري التحميل...</div>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGKel-DeHPX5rz6FAEUxwC94oXCThCKC4OoSmX9YzrDtVbfQ/viewform?embedded=true"></iframe>
         </div>
         <div class="footer-container">
-            <div class="footer">
-                <p>إدارة دعم ومتابعة الأعمال للصحة الحيوانية</p>
-                <p>يمكنك التواصل عبر: 0537557446</p>
-            </div>
+            <p>إدارة دعم ومتابعة الأعمال للصحة الحيوانية</p>
+            <p>يمكنك التواصل عبر: 0537557446</p>
         </div>
         <div class="designer-credit">
             <a href="https://behance.net/yosfgfx" target="_blank"> </a>
         </div>
     </div>
+
+    <script>
+        window.onload = () => {
+            const iframe = document.querySelector('iframe');
+            iframe.onload = () => {
+                document.getElementById('loading').style.display = 'none';
+            };
+            setTimeout(() => {
+                if (!iframe.complete) {
+                    document.getElementById('loading').innerText = 'عذرًا، لم يتم تحميل النموذج. يرجى المحاولة مرة أخرى.';
+                }
+            }, 5000);
+        };
+    </script>
 </body>
 </html>
