@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب حجز قاعة اجتماعات قطاع الصحة الحيوانية</title>
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32">
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss-rtl@0.5.2/dist/tailwind-rtl.min.css" rel="stylesheet">
+    
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="طلب حجز قاعة اجتماعات قطاع الصحة الحيوانية">
+    <meta property="og:description" content="قم بحجز قاعة الاجتماعات الخاصة بقطاع الصحة الحيوانية بسهولة ويسر.">
+    <meta property="og:image" content="Header.jpg">
+    <meta property="og:url" content="https://yosfgfx.github.io/MeetRoomBooking/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:title" content="طلب حجز قاعة اجتماعات قطاع الصحة الحيوانية">
+    <meta name="twitter:description" content="قم بحجز قاعة الاجتماعات الخاصة بقطاع الصحة الحيوانية بسهولة ويسر.">
+    <meta name="twitter:image" content="Header.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="bg-gradient-to-br from-green-500 to-blue-600 text-white font-sans">
+    <div class="max-w-6xl mx-auto p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <img src="logo-new.png" alt="Logo" class="w-24 h-24 rounded-full">
+            <h1 class="text-3xl font-bold">قطاع الصحة الحيوانية</h1>
+        </div>
+        
+        <!-- Form Header Image -->
+        <img src="header-request.jpg" alt="Header Image" class="rounded-lg mb-6 w-full">
+        
+        <!-- Form Container -->
+        <div class="bg-gray-100 rounded-lg p-6 text-gray-800">
+            <form id="bookingForm" class="space-y-4">
+                <h2 class="text-xl font-semibold">بيانات القائم بالحجز</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="name" class="block">اسم المنسق:</label>
+                        <input type="text" id="name" name="name" class="w-full border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="phone" class="block">رقم الجوال:</label>
+                        <input type="tel" id="phone" name="phone" class="w-full border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="email" class="block">البريد الإلكتروني:</label>
+                    <input type="email" id="email" name="email" class="w-full border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                
+                <h2 class="text-xl font-semibold">بيانات الحجز</h2>
+                <div>
+                    <label for="administration" class="block">اسم الإدارة:</label>
+                    <input type="text" id="administration" name="administration" class="w-full border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="date" class="block">تاريخ الاجتماع:</label>
+                        <input type="date" id="date" name="date" class="w-full border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500" onchange="updateTimeOptions(this.value)">
+                    </div>
+                    <div>
+                        <label for="time" class="block">وقت الاجتماع:</label>
+                        <select id="time" name="time" class="w-full border-gray-300 rounded-md focus:border-blue-500 focus:ring-blue-500">
+                            <option value="">اختر الوقت</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label>مدة الاجتماع:</label>
+                    <div class="space-y-2">
+                        <label><input type="radio" name="duration" value="0.5" required> نصف ساعة</label><br>
+                        <label><input type="radio" name="duration" value="1"> ساعة واحدة</label><br>
+                        <label><input type="radio" name="duration" value="2"> ساعتين</label><br>
+                        <label><input type="radio" name="duration" value="3"> ثلاث ساعات</label><br>
+                        <label><input type="radio" name="duration" value="4"> أربع ساعات</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">ارسال</button>
+            </form>
+            
+            <div id="summary" class="hidden bg-gray-100 p-6 rounded-lg mt-6 text-gray-800">
+                <h2 class="text-2xl font-bold">بيانات الموعد</h2>
+                <p id="summaryDate"></p>
+                <p id="summaryTimeStart"></p>
+                <p id="summaryTimeEnd"></p>
+                <p id="summaryAdministration"></p>
+                <p id="summaryEmail"></p>
+                <p id="summaryPhone"></p>
+                <button id="confirmButton" class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700">تأكيد الحجز</button>
+                <button id="editButton" class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">تعديل البيانات</button>
+            </div>
+        </div>
+        
+        <div class="mt-6 text-center">
+            <p>إدارة دعم ومتابعة الأعمال للصحة الحيوانية</p>
+            <p>للتواصل والاستفسار: 0537557446</p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript logic for updating time options, handling form submission, etc.
+        const availableTimes = {
+            '2024-11-24': ['9:00 AM', '10:00 AM', '11:00 AM'],
+            '2024-11-25': ['12:00 PM', '1:00 PM'],
+        };
+
+        function updateTimeOptions(selectedDate) {
+            const timeSelect = document.getElementById('time');
+            timeSelect.innerHTML = '<option value="">اختر الوقت</option>';
+            if (availableTimes[selectedDate]) {
+                availableTimes[selectedDate].forEach(time => {
+                    const option = document.createElement('option');
+                    option.value = time;
+                    option.textContent = time;
+                    timeSelect.appendChild(option);
+                });
+            } else {
+                alert('لا توجد أوقات متاحة لهذا التاريخ.');
+            }
+        }
+    </script>
+</body>
+</html>
