@@ -20,14 +20,14 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <style>
-@font-face {
-    font-family: 'SSTArabic-Bold';
-    src: url('SSTArabic-Bold.woff2') format('woff2');
-}
-@font-face {
-    font-family: 'SSTArabic-Roman';
-    src: url('SSTArabic-Roman.woff2') format('woff2');
-}
+        @font-face {
+            font-family: 'SSTArabic-Bold';
+            src: url('https://weqaa.gov.sa/Style%20Library/assets/fonts/SSTArabic-Bold.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'SSTArabic-Roman';
+            src: url('https://weqaa.gov.sa/Style%20Library/assets/fonts/SSTArabic-Roman.woff2') format('woff2');
+        }
         body {
             margin: 0;
             font-family: 'SSTArabic-Roman', sans-serif;
@@ -69,25 +69,24 @@
             margin-bottom: 20px;
             border-radius: 12px;
         }
-.form-container {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.97));
-    background-size: 200% 200%;
-    animation: gradientAnimation 70s ease-in-out infinite;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    padding: 20px;
-    box-sizing: border-box;
-}
-@keyframes gradientAnimation {
-    0% {
-        background-position: top right;
-    }
-    100% {
-        background-position: bottom left;
-    }
-}
+        .form-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.97));
+            background-size: 200% 200%;
+            animation: gradientAnimation 70s ease-in-out infinite;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        @keyframes gradientAnimation {
+            0% {
+                background-position: top right;
+            }
+            100% {
+                background-position: bottom left;
+            }
         }
         .footer-container {
             margin-top: 20px;
@@ -118,9 +117,8 @@
         }
         iframe {
             width: 100%;
-            min-height: 600px;
+            height: 100vh;
             border: none;
-            direction: rtl;
         }
         @media (max-width: 768px) {
             .header {
@@ -165,7 +163,7 @@
         <img src="https://raw.githubusercontent.com/yosfgfx/MeetRoomBooking/main/header-request.jpg" alt="Header Image" class="form-header-image">
         <div class="form-container">
             <div id="loading" style="text-align:center; color:white; font-family:'SSTArabic-Roman';">جاري التحميل...</div>
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGKel-DeHPX5rz6FAEUxwC94oXCThCKC4OoSmX9YzrDtVbfQ/viewform?embedded=true&hl=ar"></iframe>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGKel-DeHPX5rz6FAEUxwC94oXCThCKC4OoSmX9YzrDtVbfQ/viewform?embedded=true"></iframe>
         </div>
         <div class="footer-container">
             <p>إدارة دعم ومتابعة الأعمال للصحة الحيوانية</p>
@@ -182,11 +180,6 @@
             iframe.onload = () => {
                 document.getElementById('loading').style.display = 'none';
             };
-            setTimeout(() => {
-                if (!iframe.complete) {
-                    document.getElementById('loading').innerText = 'عذرًا، لم يتم تحميل النموذج. يرجى المحاولة مرة أخرى.';
-                }
-            }, 5000);
         };
     </script>
 </body>
