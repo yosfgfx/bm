@@ -5,7 +5,7 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/project/', // Replace with your repository name
+  base: '/MeetRoomBooking/New/',
   publicDir: 'public',
   server: {
     port: 3000,
