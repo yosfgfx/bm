@@ -16,7 +16,7 @@ export const Header: FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <img 
-        src={`${import.meta.env.BASE_URL}images/header-request.jpg`}
+        src={`${import.meta.env.BASE_URL}/New/public/images/header-request.jpg`}
         alt="Header" 
         className="w-full h-48 object-cover rounded-2xl mb-4"
       />
