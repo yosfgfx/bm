@@ -12,7 +12,7 @@
     "clean": "rm -rf node_modules && rm -rf dist && npm cache clean --force",
     "init": "npm install && npm run dev",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist && npm deploy && gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
