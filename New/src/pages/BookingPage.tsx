@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Header } from '../components/Header';
 import { BookingForm } from '../components/BookingForm';
 import { BookingSummary } from '../components/BookingSummary';
@@ -12,9 +12,9 @@ import type { Booking } from '../types/booking';
 export const BookingPage = () => {
   const navigate = useNavigate();
   const [bookingData, setBookingData] = useState<Omit<Booking, 'id' | 'status' | 'createdAt' | 'updatedAt'> | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess] = useState(false);
 
   const { createData, isOnline } = useFirebaseSync<Booking>('bookings');
 
