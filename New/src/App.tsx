@@ -14,6 +14,8 @@ import './styles/animations.css';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { getDatabase } from 'firebase/database';
+import { CustomRouter } from './components/CustomRouter';
+import NotFoundPage from './pages/NotFoundPage';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -39,12 +41,14 @@ const App: FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <BrowserRouter>
+    <CustomRouter>
       <div className="animated-gradient min-h-screen">
         <Logo />
         <button
           onClick={() => setIsDrawerOpen(true)}
           className="fixed top-4 left-4 z-30 text-white hover:text-white/80 transition-colors"
+          aria-label="فتح القائمة"
+          title="فتح القائمة"
         >
           <Menu size={24} />
         </button>
@@ -56,13 +60,14 @@ const App: FC = () => {
 
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/New" element={<BookingPage />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/confirmed" element={<ConfirmedAppointments />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </CustomRouter>
   );
 };
 

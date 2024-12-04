@@ -3,13 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://yosfgfx.github.io/MeetRoomBooking",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "clean": "rm -rf node_modules && rm -rf dist && npm cache clean --force",
-    "init": "npm install && npm run dev"
+    "init": "npm install && npm run dev",
+    "predeploy": "npm run build",
+    "deploy": "npm run build && cp dist/index.html dist/404.html && gh-pages -d dist"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
