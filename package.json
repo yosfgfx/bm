@@ -1,22 +1,26 @@
 {
-  "name": "your-project",
-  "version": "1.0.0",
-  "description": "A description of your project",
-  "main": "index.js",
-  "scripts": {
-    "build": "vite build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
-  "keywords": ["keyword1", "keyword2"],
-  "author": "Your Name",
-  "license": "MIT",
-  "dependencies": {
-    "vite": "^2.9.9",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "gh-pages": "^4.0.0"
-  }
+    "name": "your-project",
+    "version": "1.0.0",
+    "description": "A description of your project",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
+    },
+    "keywords": ["keyword1", "keyword2"],
+    "author": "Your Name",
+    "license": "MIT",
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.22.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^4.2.1",
+        "gh-pages": "^6.1.1",
+        "vite": "^5.1.0"
+    }
 } 
