@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { BookingPage } from './pages/BookingPage';
+import { LandingPage } from './pages/LandingPage';
 import { Admin } from './pages/Admin';
 import { AdminLogin } from './components/AdminLogin';
 import { ConfirmedAppointments } from './pages/ConfirmedAppointments';
@@ -18,7 +19,7 @@ const App: FC = () => {
         <Logo />
         <button
           onClick={() => setIsDrawerOpen(true)}
-          className="fixed top-4 left-4 z-30 text-white hover:text-white/80"
+          className="fixed top-4 left-4 z-30 text-white hover:text-white/80 transition-colors"
         >
           <Menu size={24} />
         </button>
@@ -29,7 +30,8 @@ const App: FC = () => {
         />
 
         <Routes>
-          <Route path="/" element={<BookingPage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/booking" element={<BookingPage />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/confirmed" element={<ConfirmedAppointments />} />

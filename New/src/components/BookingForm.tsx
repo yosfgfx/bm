@@ -1,13 +1,24 @@
-import { FC, useState, useEffect } from 'react';
-import { format } from 'date-fns';
-import type { Booking, Duration, TimeSlot } from '../types/booking';
-import { getAvailableTimeSlots } from '../utils/bookingUtils';
+import { FC, useEffect, useState } from 'react';
+import { format, addMinutes, isBefore, startOfToday } from 'date-fns';
+import { ref, get } from 'firebase/database';
+import { database } from '../config/firebase';
+import type { Booking } from '../types/booking';
 
 interface BookingFormProps {
-  onSubmit: (booking: Omit<Booking, 'id' | 'status' | 'createdAt' | 'updatedAt'>) => void;
+  onSubmit: (formData: Omit<Booking, 'id' | 'status' | 'createdAt' | 'updatedAt'>) => void;
 }
 
-const DURATIONS: { value: Duration; label: string }[] = [
+const DEPARTMENTS = [
+  'الإدارة العامة لمخاطر الصحة الحيوانية',
+  'الإدارة العامة لتنظيم الصحة الحيوانية',
+  'الإدارة العامة لخدمات الصحة الحيوانية',
+  'إدارة الخدمات الفنية للصحة الحيوانية',
+  'إدارة الصحة الواحدة',
+  'إدارة دعم ومتابعة عمليات الصحة الحيوانية',
+  'أخرى'
+];
+
+const DURATIONS: { value: string; label: string }[] = [
   { value: '30min', label: 'نصف ساعة' },
   { value: '1hour', label: 'ساعة واحدة' },
   { value: '2hours', label: 'ساعتان' },
@@ -15,13 +26,10 @@ const DURATIONS: { value: Duration; label: string }[] = [
   { value: '4hours', label: '4 ساعات' },
 ];
 
-const DEPARTMENTS = [
-  'قسم الصحة الحيوانية',
-  'قسم المختبرات',
-  'قسم الرقابة',
-  'قسم التفتيش',
-  'قسم الإدارة',
-];
+const WORKING_HOURS = {
+  start: '08:00',
+  end: '16:00',
+};
 
 export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -29,33 +37,94 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
     phone: '',
     email: '',
     department: '',
+    otherDepartment: '',
     date: format(new Date(), 'yyyy-MM-dd'),
-    time: format(new Date(), 'HH:mm'),
-    duration: '1hour' as Duration,
+    time: '',
+    duration: '1hour',
     notes: '',
   });
 
-  const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
+  const [availableSlots, setAvailableSlots] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const loadTimeSlots = async () => {
-      setIsLoading(true);
-      try {
-        const slots = await getAvailableTimeSlots(formData.date);
-        setAvailableSlots(slots);
-        setError('');
-      } catch (err) {
-        setError('حدث خطأ أثناء تحميل المواعيد المتاحة');
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const generateTimeSlots = (startTime: string, endTime: string, duration: number): string[] => {
+    const slots: string[] = [];
+    let current = new Date(`1970-01-01T${startTime}`);
+    const end = new Date(`1970-01-01T${endTime}`);
 
-    loadTimeSlots();
-  }, [formData.date]);
+    while (isBefore(current, end)) {
+      slots.push(format(current, 'HH:mm'));
+      current = addMinutes(current, duration);
+    }
+
+    return slots;
+  };
+
+  const checkSlotAvailability = async (date: string, time: string, duration: string): Promise<boolean> => {
+    try {
+      const bookingsRef = ref(database, 'bookings');
+      const snapshot = await get(bookingsRef);
+      
+      if (!snapshot.exists()) return true;
+
+      const bookings = Object.values(snapshot.val() as Record<string, Booking>);
+      const requestedStart = new Date(`${date}T${time}`);
+      const requestedEnd = addMinutes(requestedStart, getDurationInMinutes(duration));
+
+      return !bookings.some(booking => {
+        if (booking.date !== date) return false;
+        
+        const bookingStart = new Date(`${booking.date}T${booking.time}`);
+        const bookingEnd = addMinutes(bookingStart, getDurationInMinutes(booking.duration));
+
+        return (
+          (requestedStart >= bookingStart && requestedStart < bookingEnd) ||
+          (requestedEnd > bookingStart && requestedEnd <= bookingEnd) ||
+          (requestedStart <= bookingStart && requestedEnd >= bookingEnd)
+        );
+      });
+    } catch (error) {
+      console.error('Error checking slot availability:', error);
+      return false;
+    }
+  };
+
+  const loadAvailableSlots = async () => {
+    setIsLoading(true);
+    try {
+      const allSlots = generateTimeSlots(WORKING_HOURS.start, WORKING_HOURS.end, 30);
+      const availableSlots = await Promise.all(
+        allSlots.map(async (slot) => {
+          const isAvailable = await checkSlotAvailability(formData.date, slot, formData.duration);
+          return isAvailable ? slot : null;
+        })
+      );
+      
+      setAvailableSlots(availableSlots.filter((slot): slot is string => slot !== null));
+      setError('');
+    } catch (err) {
+      setError('حدث خطأ أثناء تحميل المواعيد المتاحة');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadAvailableSlots();
+  }, [formData.date, formData.duration]);
+
+  const getDurationInMinutes = (duration: string): number => {
+    switch (duration) {
+      case '30min': return 30;
+      case '1hour': return 60;
+      case '2hours': return 120;
+      case '3hours': return 180;
+      case '4hours': return 240;
+      default: return 60;
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,8 +135,20 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
       return;
     }
 
+    if (formData.department === 'أخرى' && !formData.otherDepartment) {
+      setError('الرجاء تحديد القسم');
+      return;
+    }
+
     try {
-      onSubmit(formData);
+      const finalDepartment = formData.department === 'أخرى' ? formData.otherDepartment : formData.department;
+      const submitData = {
+        ...formData,
+        department: finalDepartment,
+      };
+      delete submitData.otherDepartment;
+      
+      onSubmit(submitData);
     } catch (err) {
       setError('حدث خطأ أثناء إرسال الطلب');
       console.error(err);
@@ -78,7 +159,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -139,6 +220,18 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
               </option>
             ))}
           </select>
+          
+          {formData.department === 'أخرى' && (
+            <input
+              type="text"
+              name="otherDepartment"
+              value={formData.otherDepartment}
+              onChange={handleInputChange}
+              className="input-style mt-2"
+              placeholder="اكتب اسم القسم"
+              required
+            />
+          )}
         </div>
 
         <div>
@@ -147,7 +240,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
             type="date"
             name="date"
             value={formData.date}
-            min={format(new Date(), 'yyyy-MM-dd')}
+            min={format(startOfToday(), 'yyyy-MM-dd')}
             onChange={handleInputChange}
             className="input-style"
             required
@@ -166,11 +259,17 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
           >
             <option value="">اختر الوقت</option>
             {availableSlots.map((slot) => (
-              <option key={slot.time} value={slot.time} disabled={!slot.isAvailable}>
-                {slot.time}
+              <option key={slot} value={slot}>
+                {slot}
               </option>
             ))}
           </select>
+          {isLoading && (
+            <p className="text-white/70 text-sm mt-1">جاري تحميل المواعيد المتاحة...</p>
+          )}
+          {!isLoading && availableSlots.length === 0 && (
+            <p className="text-white/70 text-sm mt-1">لا توجد مواعيد متاحة في هذا اليوم</p>
+          )}
         </div>
 
         <div>
@@ -185,24 +284,24 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
                     ? 'bg-white/30 text-white'
                     : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
                 }`}
-                onClick={() => setFormData((prev) => ({ ...prev, duration: value }))}
+                onClick={() => setFormData(prev => ({ ...prev, duration: value }))}
               >
                 {label}
               </button>
             ))}
           </div>
         </div>
-      </div>
 
-      <div>
-        <label className="block text-white mb-1">ملاحظات</label>
-        <textarea
-          name="notes"
-          value={formData.notes}
-          onChange={handleInputChange}
-          className="input-style min-h-[100px]"
-          placeholder="أي ملاحظات إضافية..."
-        />
+        <div className="md:col-span-2">
+          <label className="block text-white mb-1">ملاحظات</label>
+          <textarea
+            name="notes"
+            value={formData.notes}
+            onChange={handleInputChange}
+            className="input-style min-h-[100px]"
+            placeholder="أي ملاحظات إضافية..."
+          />
+        </div>
       </div>
 
       {error && (
@@ -211,15 +310,12 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
         </div>
       )}
 
-      <div className="flex justify-end">
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="button-primary disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isLoading ? 'جاري الإرسال...' : 'إرسال الطلب'}
-        </button>
-      </div>
+      <button
+        type="submit"
+        className="w-full py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition"
+      >
+        تأكيد الحجز
+      </button>
     </form>
   );
 };
