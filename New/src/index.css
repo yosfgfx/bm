@@ -4,13 +4,17 @@
 
 @font-face {
   font-family: 'SSTArabic-Bold';
-  src: url('/SSTArabic-Bold.woff2') format('woff2');
+  src: url('./assets/SSTArabic-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'SSTArabic-Roman';
-  src: url('/SSTArabic-Roman.woff2') format('woff2');
+  src: url('./assets/SSTArabic-Roman.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
   font-display: swap;
 }
 

@@ -6,6 +6,7 @@ export default defineConfig({
   base: '/MeetRoomBooking/New/', // Ensure this matches the GitHub Pages base path
   build: {
     outDir: 'dist',
-    sourcemap: true
+    sourcemap: true,
+    assetsDir: 'assets'
   }
 });
