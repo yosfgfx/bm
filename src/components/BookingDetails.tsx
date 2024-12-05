@@ -50,22 +50,22 @@ export const BookingDetails: FC<BookingDetailsProps> = ({ details }) => {
         </div>
         
         <div className="space-y-2">
-          <p className="text-white/70">القسم:</p>
+          <p className="text-white/70">الإدارة:</p>
           <p className="text-white">{details.department}</p>
         </div>
         
         <div className="space-y-2">
-          <p className="text-white/70">التاريخ:</p>
+          <p className="text-white/70">تاريخ الاجتماع:</p>
           <p className="text-white">{formatDate(details.date)}</p>
         </div>
         
         <div className="space-y-2">
-          <p className="text-white/70">الوقت:</p>
+          <p className="text-white/70">موعد الاجتماع:</p>
           <p className="text-white">{details.time}</p>
         </div>
         
         <div className="space-y-2">
-          <p className="text-white/70">المدة:</p>
+          <p className="text-white/70">مدة الاجتماع:</p>
           <p className="text-white">{details.duration} دقيقة</p>
         </div>
         

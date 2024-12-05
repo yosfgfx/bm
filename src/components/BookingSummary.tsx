@@ -29,7 +29,7 @@ export const BookingSummary: FC<BookingSummaryProps> = ({ booking, onConfirm, on
         </div>
         
         <div>
-          <h3 className="text-white/70 text-sm">القسم</h3>
+          <h3 className="text-white/70 text-sm">الإدارة </h3>
           <p className="text-white text-lg">{booking.department}</p>
         </div>
         
@@ -44,7 +44,7 @@ export const BookingSummary: FC<BookingSummaryProps> = ({ booking, onConfirm, on
         </div>
         
         <div>
-          <h3 className="text-white/70 text-sm">المدة</h3>
+          <h3 className="text-white/70 text-sm">مدة الإجتماع</h3>
           <p className="text-white text-lg">
             {booking.duration === '30min' && 'نصف ساعة'}
             {booking.duration === '1hour' && 'ساعة واحدة'}
@@ -73,7 +73,7 @@ export const BookingSummary: FC<BookingSummaryProps> = ({ booking, onConfirm, on
           onClick={onEdit}
           className="flex-1 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg transition"
         >
-          تعديل البيانات
+          تعديل
         </button>
       </div>
     </div>

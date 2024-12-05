@@ -44,7 +44,7 @@ export const ConnectivityStatus: FC = () => {
       <div className="fixed top-4 right-4 z-50 animate-fade-in">
         <div className="glass-effect rounded-xl px-4 py-2 flex items-center gap-2 bg-emerald-500/20 text-emerald-300">
           <Wifi className="h-4 w-4" />
-          <p className="text-sm">تم استعادة الاتصال</p>
+          <p className="text-sm">أنت متصل الآن</p>
         </div>
       </div>
     );
