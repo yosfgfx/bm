@@ -59,10 +59,10 @@ const App: FC = () => {
         />
 
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<Navigate to="/MeetRoomBooking/New" />} />
           <Route path="/New" element={<BookingPage />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/login" element={<AdminLogin />} />
           <Route path="/confirmed" element={<ConfirmedAppointments />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

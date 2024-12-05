@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "/MeetRoomBooking/New/",
+  "homepage": "https://yosfgfx.github.io/MeetRoomBooking/New",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
