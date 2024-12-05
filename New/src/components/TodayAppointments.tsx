@@ -139,7 +139,7 @@ export const TodayAppointments: FC = () => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-bold text-white mb-4">حجوزات اليوم</h2>
+      <h2 className="text-xl font-bold text-white mb-4">اجتماعات اليوم</h2>
       {appointments.map(booking => (
         <AppointmentCard
           key={booking.id}
