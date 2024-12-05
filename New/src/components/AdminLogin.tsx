@@ -13,7 +13,7 @@ export const AdminLogin: FC = () => {
       localStorage.setItem('isAdmin', 'true');
       navigate('/admin');
     } else {
-      setError('اسم المستخدم أو كلمة المرور غير صحيحة');
+      setError('حاول مرة ثانية كلمة السر خطأ');
     }
   };
 
