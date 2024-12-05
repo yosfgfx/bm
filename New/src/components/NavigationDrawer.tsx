@@ -26,7 +26,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { path: '/', label: 'الرئيسية', icon: HomeIcon },
   { path: '/booking', label: 'حجز قاعة', icon: CalendarDaysIcon },
-  { path: '/my-bookings', label: 'حجوزاتي', icon: ClockIcon },
+  { path: '/my-bookings', label: 'الحجوزات', icon: ClockIcon },
   { path: '/admin/bookings', label: 'إدارة الحجوزات', icon: Cog6ToothIcon, adminOnly: true },
   { path: '/admin/settings', label: 'الإعدادات', icon: Cog6ToothIcon, adminOnly: true },
 ];
