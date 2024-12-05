@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: './MeetRoomBooking/New', // Ensure this matches the GitHub Pages base path
+  base: './MeetRoomBooking', // Ensure this matches the GitHub Pages base path
   build: {
     outDir: 'dist',
     sourcemap: true,
