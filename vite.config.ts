@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/MeetRoomBooking/', // Replace 'MeetRoomBooking' with your repository name
+  base: '/MeetRoomBooking/New/', // Ensure this matches the GitHub Pages base path
   build: {
     outDir: 'dist',
-    sourcemap: true
+    sourcemap: true,
+    assetsDir: 'assets'
   }
 });
