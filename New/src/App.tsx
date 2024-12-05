@@ -59,7 +59,7 @@ const App: FC = () => {
         />
 
         <Routes>
-          <Route path="/" element={<Navigate to="/New" />} />
+          <Route path="/" element={<Navigate to="/MeetRoomBooking/New" />} />
           <Route path="/New" element={<BookingPage />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/login" element={<AdminLogin />} />
