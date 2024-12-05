@@ -199,13 +199,13 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
             value={formData.email}
             onChange={handleInputChange}
             className="input-style"
-            placeholder="example@domain.com"
+            placeholder="xxxxx@weqaa.gov.sa"
             required
           />
         </div>
 
         <div>
-          <label className="block text-white mb-1">القسم</label>
+          <label className="block text-white mb-1">الإدارة</label>
           <select
             name="department"
             value={formData.department}
@@ -213,7 +213,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
             className="input-style"
             required
           >
-            <option value="">اختر القسم</option>
+            <option value="">اختر الإدارة</option>
             {DEPARTMENTS.map((dept) => (
               <option key={dept} value={dept}>
                 {dept}
@@ -228,7 +228,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
               value={formData.otherDepartment}
               onChange={handleInputChange}
               className="input-style mt-2"
-              placeholder="اكتب اسم القسم"
+              placeholder="اكتب مسمى الإدارة"
               required
             />
           )}
