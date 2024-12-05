@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/MeetRoomBooking/',
   build: {
-    outDir: 'dist',
+    outDir: 'dist',  // Use a relative path for the output directory
     sourcemap: true
   }
 });
