@@ -199,7 +199,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
             value={formData.email}
             onChange={handleInputChange}
             className="input-style"
-            placeholder="example@domain.com"
+            placeholder="xxxx@weqaa.gov.sa"
             required
           />
         </div>
@@ -240,7 +240,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
             type="date"
             name="date"
             value={formData.date}
-            min={format(startOfToday(), 'yyyy-MM-dd')}
+            min={format(startOfToday(), 'dd-MM-yyyy')}
             onChange={handleInputChange}
             className="input-style"
             required
