@@ -16,7 +16,7 @@ export const Header: FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <img 
-        src="/MeetRoomBooking/New/assets/header-request.jpg"
+        src="https://raw.githubusercontent.com/yosfgfx/MeetRoomBooking/main/New/assets/header-request.jpg"
         alt="Header" 
         className="w-full h-48 object-cover rounded-2xl mb-4"
       />
@@ -26,14 +26,14 @@ export const Header: FC = () => {
             حجز القاعات
           </h1>
           <p className="text-white/80 mt-1">
-            قم بحجز القاعة المناسبة لاجتماعك
+            حجز قاعة الاجتماعات
           </p>
         </div>
         <button
           onClick={handleAdminClick}
           className="button-primary"
         >
-          {isAdmin ? 'لوحة التحكم' : 'تسجيل الدخول'}
+          {isAdmin ? 'لوحة التحكم' : 'دخول مدير النظام'}
         </button>
       </div>
     </div>
