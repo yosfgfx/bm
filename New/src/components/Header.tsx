@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import weqaaheader from "./assets/head.jpg";
 export const Header: FC = () => {
   const navigate = useNavigate();
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
@@ -16,8 +16,7 @@ export const Header: FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <img 
-        src={'/MeetRoomBooking/New/assets/header-request.jpg'}
-        type = "image/jpeg"
+        src={weqaaheader}
         alt="Header" 
         className="w-full h-48 object-cover rounded-2xl mb-4"
       />
@@ -27,11 +26,7 @@ export const Header: FC = () => {
             إدارة الحجوزات
           </h1>
           <p className="text-white/80 mt-1">
-<<<<<<< HEAD
-            تسجيل الدخول المسؤول لادارة الحجوزات
-=======
-            حجز قاعة الاجتماعات
->>>>>>> be0b7ce9a796b9c85aa7ea79a65a5b9ac4c3cca8
+            تسجيل دخول المسؤول لادارة الحجوزات
           </p>
         </div>
         <button
