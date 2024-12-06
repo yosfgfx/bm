@@ -8,7 +8,7 @@ import {
   Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from './hooks/useAuth';
 import { useConnectivity } from '../hooks/useConnectivity';
 
 interface NavigationDrawerProps {
