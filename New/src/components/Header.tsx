@@ -16,7 +16,7 @@ export const Header: FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <img 
-        url="https://raw.githubusercontent.com/yosfgfx/MeetRoomBooking/main/New/assets/header-request.jpg"
+        src={'/MeetRoomBooking/New/assets/header-request.jpg'}
         type = "image/jpeg"
         alt="Header" 
         className="w-full h-48 object-cover rounded-2xl mb-4"
