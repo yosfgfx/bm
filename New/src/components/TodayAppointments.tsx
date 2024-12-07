@@ -98,7 +98,7 @@ export const TodayAppointments: FC = () => {
       const data = snapshot.val();
       if (!data) return;
 
-      const today = format(new Date(), 'yyyy-MM-dd');
+      const today = format(new Date(), 'dd-MM-yyyy');
       const todayBookings = Object.values<Booking>(data)
         .filter(booking => booking.date === today)
         .sort((a, b) => a.time.localeCompare(b.time));

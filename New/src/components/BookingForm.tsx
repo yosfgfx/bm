@@ -38,7 +38,7 @@ export const BookingForm: FC<BookingFormProps> = ({ onSubmit }) => {
     email: '',
     department: '',
     otherDepartment: '',
-    date: format(new Date(), 'yyyy-MM-dd'),
+    date: format(new Date(), 'dd-MM-yyyy'),
     time: '',
     duration: '1hour',
     notes: '',
