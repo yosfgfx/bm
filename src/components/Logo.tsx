@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import weqaalogo from "./MeetRoomBooking/New/assets/logo-new.png"
+import weqaalogo from "./assets/logo-new.png"
 
 export const Logo: FC = () => {
   return (
